@@ -15,7 +15,7 @@ import { SchedulesModule } from './schedules/schedules.module';
       type: 'sqlite',
       database: 'db.sqlite',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true, // 🔴 sadece geliştirme için
+      synchronize: true, 
     }),
     UsersModule,
     AuthModule,

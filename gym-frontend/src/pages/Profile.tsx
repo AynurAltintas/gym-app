@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api/axios';
-// styles inlined below via <style> to avoid external CSS dependency
 
 interface User {
   id: number;

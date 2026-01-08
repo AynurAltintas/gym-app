@@ -1,11 +1,10 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:3000", // backend adresin
+  baseURL: "http://localhost:3000", 
   withCredentials: true,
 });
 
-// Attach token automatically if present
 api.interceptors.request.use((config) => {
   try {
     const token = localStorage.getItem('token');
@@ -18,7 +17,6 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// On 401 remove token (so user gets redirected by UI guards on next navigation)
 api.interceptors.response.use(
   (res) => res,
   (err) => {

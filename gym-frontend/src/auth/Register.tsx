@@ -17,7 +17,6 @@ const Register = () => {
     e.preventDefault();
     setError('');
 
-    // 🔎 Basit doğrulamalar
     if (!name.trim()) {
       setError('Lütfen adınızı girin');
       return;

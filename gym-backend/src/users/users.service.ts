@@ -13,7 +13,7 @@ export class UsersService {
 
   async findAll() {
     return this.userRepo.find({
-      select: ['id', 'email', 'name', 'role'], // 🔴 password YOK
+      select: ['id', 'email', 'name', 'role'], 
     });
   }
 

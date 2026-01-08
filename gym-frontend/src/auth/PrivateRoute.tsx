@@ -36,7 +36,7 @@ const PrivateRoute = ({ children }: Props) => {
     };
   }, []);
 
-  if (status === 'verifying') return null; // or a spinner
+  if (status === 'verifying') return null; 
   if (status === 'unauth') return <Navigate to="/login" replace />;
   return children;
 };

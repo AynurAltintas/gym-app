@@ -39,7 +39,6 @@ const Admin = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  // 🆕 Form state
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [capacity, setCapacity] = useState(0);
@@ -82,7 +81,6 @@ const Admin = () => {
     }
   };
 
-  // 🆕 Kurs ekleme
   const handleCreateCourse = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -120,19 +118,16 @@ const Admin = () => {
         ),
       );
 
-      // formu sıfırla
       setTitle('');
       setDescription('');
       setCapacity(0);
       setTrainerId('');
       setScheduleList([]);
 
-      // varsayılan program alanlarını geri al
       setScheduleDay('Pazartesi');
       setScheduleTime('09:00');
       setScheduleDuration(60);
 
-      // listeyi güncelle
       fetchCourses();
     } catch (err) {
       console.error(err);
@@ -191,7 +186,6 @@ const Admin = () => {
       alert('Eğitmen güncellenemedi');
     }
   };
-  // ➕ Trainer ekle
   const handleCreateTrainer = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -206,18 +200,15 @@ const Admin = () => {
         expertise,
       });
 
-      // formu temizle
       setName('');
       setExpertise('');
 
-      // listeyi güncelle
       fetchTrainers();
     } catch {
       alert('Eğitmen eklenemedi');
     }
   };
 
-  // 🗑️ Kurs sil
   const handleDeleteCourse = async (courseId: number) => {
     if (!confirm('Bu kursu silmek istediğinize emin misiniz?')) {
       return;
@@ -231,7 +222,6 @@ const Admin = () => {
     }
   };
 
-  // 🗑️ Eğitmen sil
   const handleDeleteTrainer = async (trainerId: number) => {
     if (!confirm('Bu eğitmeni silmek istediğinize emin misiniz?')) {
       return;

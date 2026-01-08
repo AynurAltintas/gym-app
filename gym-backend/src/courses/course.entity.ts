@@ -17,15 +17,12 @@ export class Course {
   @Column()
   capacity: number;
 
-  // Her kursun bir eğitmeni olur
   @ManyToOne(() => Trainer, (trainer) => trainer.courses, { eager: true })
   trainer: Trainer;
 
-  // Kursun birden fazla zamanı olabilir
   @OneToMany(() => Schedule, (schedule) => schedule.course)
   schedules: Schedule[];
 
-  // Kursa kayıt olan kullanıcılar
   @OneToMany(() => Enrollment, enrollment => enrollment.course)
   enrollments: Enrollment[];
 }

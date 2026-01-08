@@ -22,7 +22,6 @@ export class EnrollmentsService {
 
     if (!user || !course) throw new NotFoundException();
 
-    // Rol bazlı erişim kontrolü
     if (user.role === 'user' && course.capacity === 1) {
       throw new BadRequestException('Bireysel kurslara sadece Elite üyeler kayıt olabilir');
     }

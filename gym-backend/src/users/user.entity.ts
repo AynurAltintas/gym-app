@@ -27,8 +27,6 @@ export class User {
   })
   role: UserRole;
   
-
-  // 👇 MUTLAKA class İÇİNDE
   @OneToMany(() => Enrollment, enrollment => enrollment.user)
   enrollments: Enrollment[];
 }

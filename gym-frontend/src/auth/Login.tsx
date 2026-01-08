@@ -2,10 +2,6 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api/axios';
 
-/**
- * Login response tipi
- * Backend: { access_token: string }
- */
 interface AuthResponse {
   access_token: string;
 }
@@ -28,7 +24,6 @@ const Login = () => {
     }
   }, []);
 
-  // Eğer zaten giriş yapılmışsa giriş sayfasına eriştiğinde kurslara yönlendir
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) navigate('/courses');
@@ -38,7 +33,6 @@ const Login = () => {
     e.preventDefault();
     setError('');
 
-    // Basit doğrulama
     if (!email || !email.includes('@')) {
       setError('Lütfen geçerli bir email girin');
       return;
@@ -55,20 +49,16 @@ const Login = () => {
         password,
       });
 
-      // Token'ı sakla
       localStorage.setItem('token', response.data.access_token);
 
-      // Email'i hatırla seçeneği
       if (remember) {
         localStorage.setItem('rememberEmail', email);
       } else {
         localStorage.removeItem('rememberEmail');
       }
 
-      // Kurslara yönlendir
       navigate('/courses');
     } catch (err: any) {
-      // Backend'den gelen özel mesaj varsa göster
       const message =
         err?.response?.data?.message || err?.response?.data?.detail || 'Email veya şifre hatalı';
       setError(message);
