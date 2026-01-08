@@ -1,8 +1,4 @@
-# CENG 307 2025-2026 Dönem Dönem Sonu Proje Raporu
-
-## Aynur Altıntaş 23253053
-
-## RUTİN - SPOR KOMPLEKSİ YÖNETİM SİSTEMİ
+# SPOR KOMPLEKSİ YÖNETİM SİSTEMİ
 
 ---
 
@@ -10,7 +6,7 @@
 
 ### 1.1 Proje Tanımı
 
-RUTİN, spor kompleksleri için geliştirilmiş modern bir web tabanlı yönetim sistemidir. Sistem, kurs yönetimi, eğitmen takibi, üye kaydı ve program planlama gibi temel işlevleri dijital ortamda gerçekleştirmeyi sağlar.
+Proje, spor kompleksleri için geliştirilmiş modern bir web tabanlı yönetim sistemidir. Sistem, kurs yönetimi, eğitmen takibi, üye kaydı ve program planlama gibi temel işlevleri dijital ortamda gerçekleştirmeyi sağlar.
 
 ### 1.2 Kullanılan Teknolojiler
 
@@ -32,7 +28,7 @@ RUTİN, spor kompleksleri için geliştirilmiş modern bir web tabanlı yönetim
 
 ### 1.3 Proje Paylaşım Linki
 
-**GitHub Repository:** `[Buraya GitHub linkinizi ekleyin]`
+**GitHub Repository:** `[https://github.com/AynurAltintas/gym-app.git]`
 
 ---
 
@@ -500,5 +496,4 @@ User ve Course arasında **çoka çok (N:N)** ilişki bulunmaktadır. Bu ilişki
 ---
 
 **Hazırlayan:** Aynur Altıntaş  
-**Tarih:** Ocak 2026  
-**Ders:** CENG 307 2025-2026 Dönem
+**Tarih:** Ocak 2026
