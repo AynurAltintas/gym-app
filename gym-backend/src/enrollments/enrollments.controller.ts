@@ -9,7 +9,6 @@ import { Roles } from '../auth/roles.decorator';
 export class EnrollmentsController {
   constructor(private enrollmentsService: EnrollmentsService) {}
 
-  // Kullanıcı kendini kursa kaydeder
   @Post()
   enroll(@Request() req, @Body('courseId') courseId: number) {
     return this.enrollmentsService.enroll(req.user.userId, courseId);
@@ -28,7 +27,6 @@ export class EnrollmentsController {
     return this.enrollmentsService.unenroll(req.user.userId, courseId);
   }
 
-  // Admin tüm kayıtları görür
   @Get()
   @Roles('admin')
   findAll() {

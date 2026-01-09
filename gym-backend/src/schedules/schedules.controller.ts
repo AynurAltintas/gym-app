@@ -8,7 +8,6 @@ import { Roles } from '../auth/roles.decorator';
 export class SchedulesController {
   constructor(private readonly schedulesService: SchedulesService) {}
 
-  // 🔒 SADECE ADMIN schedule ekleyebilir
   @Post()
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('admin')
@@ -26,7 +25,6 @@ export class SchedulesController {
     );
   }
 
-  // 🔓 Herkes görebilir
   @Get()
   findAll() {
     return this.schedulesService.findAll();

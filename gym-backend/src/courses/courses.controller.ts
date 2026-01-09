@@ -8,13 +8,11 @@ import { Roles } from '../auth/roles.decorator';
 export class CoursesController {
   constructor(private readonly coursesService: CoursesService) {}
 
-  // 🔓 Giriş yapmayanlar bile kursları görebilir
   @Get()
   findAll() {
     return this.coursesService.findAll();
   }
 
-  // 🔒 SADECE ADMIN kurs ekleyebilir
   @Post()
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('admin')
@@ -32,7 +30,6 @@ export class CoursesController {
     );
   }
 
-  // 🗑️ SADECE ADMIN kurs silebilir
   @Delete(':id')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('admin')

@@ -22,6 +22,13 @@ interface Enrollment {
   };
 }
 
+interface AdminUser {
+  id: number;
+  email: string;
+  name?: string;
+  role: 'user' | 'admin' | 'elite_user';
+}
+
 interface Course {
   id: number;
   title: string;
@@ -36,6 +43,7 @@ interface Course {
 const Admin = () => {
   const [courses, setCourses] = useState<Course[]>([]);
   const [trainers, setTrainers] = useState<Trainer[]>([]);
+  const [users, setUsers] = useState<AdminUser[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -57,6 +65,7 @@ const Admin = () => {
   useEffect(() => {
     fetchCourses();
     fetchTrainers();
+    fetchUsers();
   }, []);
 
   const fetchCourses = async () => {
@@ -76,6 +85,17 @@ const Admin = () => {
       setTrainers(res.data);
     } catch {
       setError('Eğitmenler yüklenemedi');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchUsers = async () => {
+    try {
+      const res = await api.get<AdminUser[]>('/users');
+      setUsers(res.data);
+    } catch {
+      setError('Kullanıcılar yüklenemedi');
     } finally {
       setLoading(false);
     }
@@ -235,6 +255,16 @@ const Admin = () => {
     }
   };
 
+  const handleUpdateUserRole = async (userId: number, role: AdminUser['role']) => {
+    try {
+      await api.patch(`/users/${userId}/role`, { role });
+      setUsers((prev) => prev.map((u) => (u.id === userId ? { ...u, role } : u)));
+    } catch (err) {
+      console.error(err);
+      alert('Rol güncellenemedi');
+    }
+  };
+
   if (loading) return <div style={styles.loading}>Yükleniyor...</div>;
   if (error) return <div style={styles.error}>{error}</div>;
 
@@ -245,6 +275,39 @@ const Admin = () => {
       <div style={styles.container}>
         <section style={styles.hero}>
           <h1 style={styles.title}>Kontrol Paneli</h1>
+        </section>
+
+        <section style={styles.sectionCard}>
+          <div style={styles.sectionHeader}>
+            <div>
+              <p style={styles.sectionKicker}>Yönetim</p>
+              <h3 style={styles.sectionTitle}>Kullanıcı Rolleri</h3>
+            </div>
+          </div>
+
+          {users.length === 0 ? (
+            <p style={styles.muted}>Henüz kullanıcı yüklenmedi</p>
+          ) : (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              {users.map((user) => (
+                <div key={user.id} style={styles.userRow}>
+                  <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <span style={styles.userEmail}>{user.email}</span>
+                    <span style={styles.userName}>{user.name || 'İsim yok'}</span>
+                  </div>
+                  <select
+                    value={user.role}
+                    onChange={(e) => handleUpdateUserRole(user.id, e.target.value as AdminUser['role'])}
+                    style={styles.roleSelect}
+                  >
+                    <option value="user">User</option>
+                    <option value="elite_user">Elite User</option>
+                    <option value="admin">Admin</option>
+                  </select>
+                </div>
+              ))}
+            </div>
+          )}
         </section>
 
         <section style={styles.sectionCard}>
@@ -556,6 +619,14 @@ const styles: { [key: string]: React.CSSProperties } = {
     alignItems: 'center',
     marginBottom: 10,
   },
+  sectionKicker: {
+    color: '#22c55e',
+    fontSize: 13,
+    fontWeight: 700,
+    letterSpacing: '0.08em',
+    textTransform: 'uppercase',
+    margin: 0,
+  },
   sectionTitle: {
     color: '#f8fafc',
     fontSize: 20,
@@ -759,5 +830,34 @@ const styles: { [key: string]: React.CSSProperties } = {
     cursor: 'pointer',
     fontWeight: 600,
     width: 'auto',
+  },
+  userRow: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 12,
+    borderRadius: 12,
+    border: '1px solid rgba(255,255,255,0.06)',
+    background: 'rgba(255,255,255,0.02)',
+    gap: 12,
+  },
+  userEmail: {
+    color: '#e5e7eb',
+    fontWeight: 700,
+    fontSize: 14,
+  },
+  userName: {
+    color: '#94a3b8',
+    fontSize: 13,
+    marginTop: 4,
+  },
+  roleSelect: {
+    padding: '10px 12px',
+    borderRadius: 10,
+    border: '1px solid #1e293b',
+    background: '#020617',
+    color: '#e5e7eb',
+    minWidth: 150,
+    fontWeight: 600,
   },
 };

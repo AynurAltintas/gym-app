@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User, UserRole } from './user.entity';
@@ -47,5 +47,28 @@ export class UsersService {
       where: { id },
       select: ['id', 'email', 'name', 'role'],
     });
+  }
+
+  async updateRole(userId: number, role: string) {
+    const normalized = role?.toLowerCase();
+    const allowed: Record<string, UserRole> = {
+      user: UserRole.USER,
+      admin: UserRole.ADMIN,
+      elite_user: UserRole.ELITE_USER,
+    };
+
+    if (!allowed[normalized]) {
+      throw new BadRequestException('Geçersiz rol');
+    }
+
+    const user = await this.userRepo.findOne({ where: { id: userId } });
+    if (!user) {
+      throw new NotFoundException('Kullanıcı bulunamadı');
+    }
+
+    user.role = allowed[normalized];
+    await this.userRepo.save(user);
+
+    return { id: user.id, email: user.email, role: user.role };
   }
 }
